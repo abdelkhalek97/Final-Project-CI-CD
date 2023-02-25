@@ -51,24 +51,22 @@ module "securityGroup" {
 }
 
 module "Nginx_public" {
-  source                 = "./Ec2nginx"
-  ami_id                 = "ami-06878d265978313ca"
+  source                 = "./Ec2"
   instType               = "t2.micro"
-  subnet_ids             = module.vpc.pup_subnet_id
+  subnet_ids             = module.vpc.pup_subnet_id[1]
   secg_id                = module.securityGroup.sg_id
   name                   = "proxy"
   key_name               = "iti"
-  connection_type        = "ssh"
-  connection_user        = "ubuntu"
-  connection_private_key = "./iti.pem"
-  file_source            = "./nginx.sh"
-  file_destination       = "/tmp/nginx.sh"
-  inline                 = ["chmod 777 /tmp/nginx.sh", "/tmp/nginx.sh ${module.NetwowrkLB.Load_Balancer_DNS}"]
-
 }
 
 module "eks" {
   source = "./eks"
   subnet_ids = module.vpc.priv_subnet_id
   
+}
+
+module "node" {
+  source = "./eks-node"
+  subnet_ids = module.vpc.priv_subnet_id
+  clusterDemo = module.eks.clusterDemo
 }
