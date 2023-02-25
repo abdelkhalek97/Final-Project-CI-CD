@@ -14,7 +14,7 @@ variable "vpcid" {
 
 variable "natGatewayName" {
   type        = string
-  default = ""
+  default     = ""
   description = "ig id"
 
 }
@@ -31,7 +31,7 @@ variable "subnet_ids" {
 
 variable "internetGatewayName" {
   type        = string
-  default = ""
+  default     = ""
   description = "ig id"
 
 }
