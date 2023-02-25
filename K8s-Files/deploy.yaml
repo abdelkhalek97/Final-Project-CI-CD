@@ -26,11 +26,11 @@ spec:
             - name: jenkins-pv
               mountPath: /var/jenkins_home
             - name: docker-socket
-              mountPath: /var/run/docker.sock
+              mountPath: /var/run
       volumes:
         - name: jenkins-pv
           persistentVolumeClaim:
               claimName: jenkins-pv-claim
         - name: docker-socket
           hostPath:
-            path: /var/run/docker.sock 
+            path: /var/run

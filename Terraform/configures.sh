@@ -20,5 +20,3 @@ sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --u
 which aws
 ls -l /usr/local/bin/aws
 aws eks --region us-east-1 update-kubeconfig --name demo
-cd /home/ubuntu
-mkdir K8s-Files
