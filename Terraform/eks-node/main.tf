@@ -36,12 +36,15 @@ resource "aws_eks_node_group" "private-nodes" {
   subnet_ids = var.subnet_ids
 
   capacity_type  = "ON_DEMAND"
-  instance_types = ["t3.small"]
+  instance_types = ["t2.medium"]
 
   scaling_config {
     desired_size = 1
-    max_size     = 5
-    min_size     = 0
+    max_size     = 2
+    min_size     = 1
+  }
+    remote_access {
+    ec2_ssh_key = "iti"
   }
 
   update_config {
@@ -52,17 +55,6 @@ resource "aws_eks_node_group" "private-nodes" {
     role = "general"
   }
 
-  # taint {
-  #   key    = "team"
-  #   value  = "devops"
-  #   effect = "NO_SCHEDULE"
-  # }
-
-  # launch_template {
-  #   name    = aws_launch_template.eks-with-disks.name
-  #   version = aws_launch_template.eks-with-disks.latest_version
-  # }
-
   depends_on = [
     aws_iam_role_policy_attachment.nodes-AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.nodes-AmazonEKS_CNI_Policy,
@@ -70,17 +62,3 @@ resource "aws_eks_node_group" "private-nodes" {
   ]
 }
 
-# resource "aws_launch_template" "eks-with-disks" {
-#   name = "eks-with-disks"
-
-#   key_name = "local-provisioner"
-
-#   block_device_mappings {
-#     device_name = "/dev/xvdb"
-
-#     ebs {
-#       volume_size = 50
-#       volume_type = "gp2"
-#     }
-#   }
-# }

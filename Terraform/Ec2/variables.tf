@@ -25,3 +25,7 @@ variable "secg_id" {
 variable "key_name" {
   default = ""
 }
+
+variable "instance_profile" {
+  
+}

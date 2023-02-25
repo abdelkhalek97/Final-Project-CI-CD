@@ -11,6 +11,12 @@ resource "aws_security_group" "sec-group" {
     cidr_blocks      = [var.pup-cidr]
 
   }
+    ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   
   ingress {
     from_port   = var.sg_from_port_ingress

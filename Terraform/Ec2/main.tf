@@ -5,9 +5,16 @@ resource "aws_instance" "ec2" {
   key_name                    = var.key_name
   vpc_security_group_ids      = [var.secg_id]
   associate_public_ip_address = "true"
+  iam_instance_profile = aws_iam_instance_profile.instance_profile
 
   tags = {
     Name = "jump-host"
   }
 }
 
+
+resource "aws_iam_instance_profile" "instance_profile" {
+  name = "ec2-instance-profile"
+
+  role = var.instance_profile
+}

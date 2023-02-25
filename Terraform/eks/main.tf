@@ -22,6 +22,8 @@ resource "aws_iam_role_policy_attachment" "demo-AmazonEKSClusterPolicy" {
   role       = aws_iam_role.demo.name
 }
 
+# -####################eks##########################
+
 resource "aws_eks_cluster" "demo" {
   name     = "demo"
   role_arn = aws_iam_role.demo.arn
@@ -29,6 +31,8 @@ resource "aws_eks_cluster" "demo" {
   vpc_config {
     subnet_ids = var.subnet_ids
   }
+  
+  endpoint_private_access = true
 
   depends_on = [aws_iam_role_policy_attachment.demo-AmazonEKSClusterPolicy]
 }
