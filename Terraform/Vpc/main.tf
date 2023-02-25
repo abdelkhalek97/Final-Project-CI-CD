@@ -22,9 +22,11 @@ resource "aws_subnet" "subnets_public" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = each.value.cidr
   availability_zone = element(data.aws_availability_zones.available.names, each.key)
-
+  map_public_ip_on_launch = true
   tags = {
     Name = "public ${each.key}"
+    "kubernetes.io/cluster/demo" = "owned"
+    "kubernetes.io/role/internal-elb" = 1
   }
 }
 
@@ -41,5 +43,7 @@ resource "aws_subnet" "subnets_private" {
 
   tags = {
     Name = "private ${each.key}"
+    "kubernetes.io/cluster/demo" = "owned"
+    "kubernetes.io/role/internal-elb" = 1
   }
 }

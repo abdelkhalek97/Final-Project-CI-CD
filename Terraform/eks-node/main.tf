@@ -18,6 +18,7 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEKSWorkerNodePolicy" {
   role       = aws_iam_role.nodes.name
 }
 
+
 resource "aws_iam_role_policy_attachment" "nodes-AmazonEKS_CNI_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
   role       = aws_iam_role.nodes.name
@@ -27,6 +28,8 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.nodes.name
 }
+
+#-###########################eks-node-group###################
 
 resource "aws_eks_node_group" "private-nodes" {
   cluster_name    = var.clusterDemo
@@ -62,3 +65,10 @@ resource "aws_eks_node_group" "private-nodes" {
   ]
 }
 
+data "aws_instances" "my_worker_nodes" {
+  instance_tags = {
+    "eks:cluster-name" = "demo"
+  }
+  instance_state_names = ["running"]
+  depends_on           = [aws_eks_node_group.private-nodes]
+}

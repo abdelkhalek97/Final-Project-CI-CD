@@ -29,3 +29,26 @@ variable "key_name" {
 variable "instance_profile" {
 
 }
+variable "priavte_ip" {
+  
+}
+
+variable "inline" {
+  
+}
+
+variable "file_source" {
+  
+}
+variable "file_destination" {
+  
+}
+
+variable "connection_type" {
+}
+
+variable "connection_user" {
+}
+
+variable "connection_private_key" {
+}

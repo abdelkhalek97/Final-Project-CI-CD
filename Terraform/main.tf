@@ -50,19 +50,10 @@ module "securityGroup" {
   sg_protocol_egress   = "-1"
 }
 
-module "bastion-host" {
-  source           = "./Ec2"
-  instType         = "t2.micro"
-  subnet_ids       = module.vpc.pup_subnet_id[1]
-  secg_id          = module.securityGroup.sg_id
-  name             = "proxy"
-  key_name         = "iti"
-  instance_profile = module.node.iam_id
-}
-
 module "eks" {
   source     = "./eks"
   subnet_ids = module.vpc.priv_subnet_id
+  sg = module.securityGroup.sg_id
 
 }
 
@@ -70,4 +61,24 @@ module "node" {
   source      = "./eks-node"
   subnet_ids  = module.vpc.priv_subnet_id
   clusterDemo = module.eks.clusterDemo
+}
+
+module "bastion-host" {
+  source           = "./Ec2"
+  instType         = "t2.micro"
+  subnet_ids       = module.vpc.pup_subnet_id[1]
+  secg_id          = module.securityGroup.sg_id
+  name             = "proxy"
+  key_name         = "iti"
+  file_source = "./configures.sh"
+  file_destination       = "/tmp/configures.sh"
+  instance_profile = module.node.iam_id
+  priavte_ip = module.node.node-ip
+  connection_type        = "ssh"
+  connection_user        = "ubuntu"
+  connection_private_key = "./iti.pem"
+  inline = ["chmod 777 /tmp/configures.sh", "/tmp/configures.sh"]
+  depends_on = [
+    module.node
+  ]
 }
