@@ -1,5 +1,5 @@
 # Final-Project-CI-CD
-![home_Page Image](./screenshots/project.png)
+![home_Page Image](./screenshots/project-overview.png)
 
 ## Before you start
 
