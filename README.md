@@ -97,10 +97,9 @@ https://github.com/abdelkhalek97/Final-Task-Application.git
 ![home_Page Image](./screenshots/build.png)
 
 ### - Copy dns-name from console-output of the build:
-![home_Page Image](./screenshots/build.png)\
 
 - enter the dns name in browser, the application up and running.
-
+![home_Page Image](./screenshots/project.png)\
 
 ### Important for destroying the project
 
